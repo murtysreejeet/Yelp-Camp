@@ -1,0 +1,53 @@
+<% layout('layouts/boilerPlates') -%>
+
+
+  <div class="row">
+    <h1 class="text-centre">Edit Campground</h1>
+    <div class="col-6 offset-3">
+      <form action="/campgrounds/<%= Campground._id%>?_method=put" method="post" novalidate class="needs-validation">
+
+        <div class="mb-3">
+          <label class="form-label" for="title">Title</label>
+          <input class="form-control" type="text" id="title" placeholder="title" name="campground[title]"
+            value="<%= Campground.title %>"required/>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="location">Location</label>
+          <input class="form-control" type="text" id="location" placeholder="location" name="campground[location]"
+            value="<%= Campground.location %>" required/>
+
+        </div>
+        <label class="form-label" for="image">Image url</label>
+        <input class="form-control" type="text" id="image" placeholder="image" name="campground[image]"
+          value="<%= Campground.image %>"required/>
+
+
+        <div>
+          <label class="form-label" for="description">Description</label>
+          <textarea class="form-control" type="text" id="description" placeholder="description"
+            name="campground[description]" required><%= Campground.description%></textarea>
+        </div>
+
+        <div class="mb-3">
+
+          <label class="form-label" for="price">Campground Price</label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="price">$</span>
+            <input type="text" class="form-control" placeholder="0.00" aria-label="price-label"
+              aria-describedby="price-label" name="campground[price]" value="<%= Campground.price %>" required>
+          </div>
+        </div>
+
+        <div class="mb-3 mt-3">
+          <button class="btn btn-success submit">Update Campground</button>
+        </div>
+
+      </form>
+      <div class="flex"><a class="btn btn-primary" href="/campgrounds"> All Campground</a></div>
+      <div class="mt-3"><a class="btn btn-primary" href="/campgrounds/<%= Campground._id %>">Show</a></div>
+
+
+    </div>
+  </div>
+  </div>
