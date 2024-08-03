@@ -37,17 +37,14 @@ else{
 
 router.post('/',validateReview, catchAsync(async(req,res)=>{
     const Campground = await campground.findById(req.params.id);
-    const review = new Review (req.params.id);
+    const review = new Review (req.body.review);
     
     Campground.reviews.push(review);
     await review.save();
     await Campground.save();
-   console.log(review);
-   console.log(Campground);
-   
+    req.flash('success','Created new review')
     res.redirect(`/campgrounds/${Campground._id}`);
-   
-   
    }))
+
 
    module.exports = router;
