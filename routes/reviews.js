@@ -1,50 +1,11 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
-
 const catchAsync = require("../utensils/catchAsync");
-const ExpressError = require("../utensils/ExpressError")
+const reviews = require("../controllers/reviews")
+const {validateReview,isloggedIn,isReviewAuthor} = require('../middleware');
 
+router.post('/',isloggedIn, validateReview, catchAsync(reviews.createReview))
 
-
-const campground = require("../models/campground");
-const Review = require ("../models/review")
-
-const{campgroundSchema,reviewSchema}= require('../schema')
-
-
-const validateCamp = (req,res,next) =>{
-    const {error} = campgroundSchema.validate(req.body);
-    if(error){
-     const msg = error.details.map(el => el.message).join(',')
-     throw new ExpressError(msg,400)
-    }
-    else {
-     next();
-    }
-}
-
-const validateReview = (req,res,next)=>{
-const {error} = reviewSchema.validate(req.body);
-if(error){
- const msg = error.details.map(el => el.message).join(',')
- throw new ExpressError(msg,400)
-}
-else{
- next();
-}
-}
-
-
-router.post('/',validateReview, catchAsync(async(req,res)=>{
-    const Campground = await campground.findById(req.params.id);
-    const review = new Review (req.body.review);
-    
-    Campground.reviews.push(review);
-    await review.save();
-    await Campground.save();
-    req.flash('success','Created new review')
-    res.redirect(`/campgrounds/${Campground._id}`);
-   }))
-
-
+   router.delete('/:reviewId',isloggedIn,isReviewAuthor, catchAsync(reviews.delReview))
+   
    module.exports = router;
