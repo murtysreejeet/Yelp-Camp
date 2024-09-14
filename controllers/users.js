@@ -33,24 +33,6 @@ module.exports.register = async(req ,res,next)=>{
           res.redirect(redirectUrl);
       }
 
-   module.exports.logout =  (req, res) => {
-    req.logout(function (err) {
-        if (err) {
-            return next(err);
-        }
-        req.flash('success', 'Goodbye!');
-        res.redirect('/campgrounds');
-    });
-}
 
 
 
-// module.exports.logout = (req, res) => {
-//   req.logout(function (err) {
-//       if (err) {
-//           return (err);
-//       }
-//       req.flash('success', "Goodbye!");
-//       res.redirect('/campgrounds');
-//   });
-// }
